@@ -1,4 +1,4 @@
-service_name: 'example'
+service_name: 'lexal_n'
 
 http:
   url: http://0.0.0.0:9000
