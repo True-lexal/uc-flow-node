@@ -10,7 +10,7 @@ from uc_http_requester.requester import Request
 
 
 class NodeType(flow.NodeType):
-    id: str = 'lexal_id'
+    id: str = '80eadd09-3f33-4148-80ee-adde09856abf'
     type: flow.NodeType.Type = flow.NodeType.Type.action
     name: str = 'lexal_name'
     is_public: bool = False
@@ -19,13 +19,30 @@ class NodeType(flow.NodeType):
     description: str = 'lexal_description'
     properties: List[Property] = [
         Property(
-            displayName='Тестовое поле',
-            name='foo_field',
-            type=Property.Type.JSON,
-            placeholder='Foo placeholder',
-            description='Foo description',
+            displayName='Текстовое поле',
+            name='str_field',
+            type=Property.Type.STRING,
+            placeholder='',
+            description='number',
             required=True,
-            default='Test data',
+            default="0",
+        ),
+        Property(
+            displayName='Числовое поле',
+            name='int_field',
+            type=Property.Type.NUMBER,
+            placeholder='',
+            description='number',
+            required=True,
+            default=0,
+        ),
+        Property(
+            displayName='Переключатель в строку',
+            name='change_field',
+            type=Property.Type.BOOLEAN,
+            description='Выключено -> int; Включено -> str',
+            required=True,
+            default=False,
         )
     ]
 
@@ -38,8 +55,15 @@ class InfoView(info.Info):
 class ExecuteView(execute.Execute):
     async def post(self, json: NodeRunContext) -> NodeRunContext:
         try:
+            try:
+                str_field = int(json.node.data.properties['str_field'])
+            except ValueError:
+                raise ValueError('Должны быть введены цифры в текстовое поле!')
+            result = str_field + json.node.data.properties['int_field']
+            if json.node.data.properties['change_field']:
+                result = str(result)
             await json.save_result({
-                "result": json.node.data.properties['foo_field']
+                "result": result
             })
             json.state = RunState.complete
         except Exception as e:
