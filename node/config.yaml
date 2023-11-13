@@ -15,8 +15,8 @@ uc_flow_node:
   register_on_start: false
   execute_view_queue_size: 500
   execute_view_workers: 5
-  private_url: https://e259-178-176-79-255.ngrok-free.app
-  public_url: https://e259-178-176-79-255.ngrok-free.app
+  private_url: https://dfa2-2a00-1370-817e-6b6b-b0e6-3cfd-9eb2-98a8.ngrok-free.app
+  public_url: https://dfa2-2a00-1370-817e-6b6b-b0e6-3cfd-9eb2-98a8.ngrok-free.app
   uc_flow:
     domain: https://uc-flow-v2-pp-api.comagic.ru
     jwt_secret: 9109a79dy6ly2uej

@@ -5,8 +5,10 @@ from uc_flow_nodes.schemas import NodeRunContext
 from uc_flow_nodes.service import NodeService
 from uc_flow_nodes.views import info, execute
 from uc_flow_schemas import flow
-from uc_flow_schemas.flow import Property, CredentialProtocol, RunState
+from uc_flow_schemas.flow import Property, CredentialProtocol, RunState, OptionValue, DisplayOptions
 from uc_http_requester.requester import Request
+
+from .enums import EnumValues
 
 
 class NodeType(flow.NodeType):
@@ -43,6 +45,100 @@ class NodeType(flow.NodeType):
             description='Выключено -> int; Включено -> str',
             required=True,
             default=False,
+        ),
+        Property(
+            displayName='Переключатель',
+            name='change_on',
+            type=Property.Type.BOOLEAN,
+            description='open',
+            required=True,
+            default=False,
+        ),
+        Property(
+            displayName='field1',
+            name='field1',
+            type=Property.Type.OPTIONS,
+            noDataExpression=True,
+            options=[
+                OptionValue(
+                    name='Значение 1',
+                    value=EnumValues.val1,
+                    description='Значение 1'
+                ),
+                OptionValue(
+                    name='Значение 2',
+                    value=EnumValues.val2,
+                    description='Значение 2'
+                ),
+            ],
+            displayOptions=DisplayOptions(
+                show={
+                    'change_on': [True,]
+                }
+            )
+
+        ),
+        Property(
+            displayName='field2',
+            name='field2',
+            type=Property.Type.OPTIONS,
+            noDataExpression=True,
+            options=[
+                OptionValue(
+                    name='Значение 1',
+                    value=EnumValues.val1,
+                    description='Значение 1'
+                ),
+                OptionValue(
+                    name='Значение 2',
+                    value=EnumValues.val2,
+                    description='Значение 2'
+                ),
+            ],
+            displayOptions=DisplayOptions(
+                show={
+                    'change_on': [True,]
+                }
+            )
+
+        ),
+        Property(
+            displayName='Поле ввода почты',
+            name='email_field',
+            type=Property.Type.EMAIL,
+            noDataExpression=True,
+            displayOptions=DisplayOptions(
+                show={
+                    'field1': [
+                        EnumValues.val1,
+                    ],
+                    'field2': [
+                        EnumValues.val1,
+                    ],
+                    'change_on': [
+                        True,
+                        ]
+                }
+            )
+        ),
+        Property(
+            displayName='Поле даты и времени',
+            name='dt_field',
+            type=Property.Type.DATETIME,
+            noDataExpression=True,
+            displayOptions=DisplayOptions(
+                show={
+                    'field1': [
+                        EnumValues.val2,
+                    ],
+                    'field2': [
+                        EnumValues.val2,
+                    ],
+                    'change_on': [
+                        True,
+                        ]
+                }
+            )
         )
     ]
 
